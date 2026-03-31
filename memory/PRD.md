@@ -1,123 +1,109 @@
 # Astreon Animus Interface - Product Requirements Document
 
 ## Original Problem Statement
-Redesign the portfolio into a signature experience called "Astreon Animus Interface" - a premium, minimal, futuristic system interface inspired by Animus-style environments (clean, white sci-fi). NOT a normal portfolio. Feels like entering an advanced digital system.
+Create a premium, minimal, futuristic portfolio called "Astreon Animus Interface" that feels like entering an advanced digital system. Enhanced with advanced interactions, system behavior, and polish while maintaining clean design.
 
 ## Architecture Overview
-- **Frontend**: React 19 with Tailwind CSS
-- **Animation**: Framer Motion
+- **Frontend**: React 19 + Tailwind CSS
+- **Animation**: Framer Motion (useScroll, useTransform, useSpring)
 - **State Management**: Zustand
-- **Styling**: CSS Variables for theme system, minimal glassmorphism
+- **Styling**: CSS Variables for theme system
 
 ## Design Philosophy
 - Minimal ≠ boring
-- Futuristic ≠ neon overload
+- Futuristic ≠ neon overload  
 - Clean ≠ empty
-- Feels: intelligent, precise, immersive, controlled
-
-## User Personas
-1. **Recruiters/Hiring Managers** - Looking for exceptional talent, impressed by attention to detail
-2. **Tech Leads/CTOs** - Evaluating technical skills and system thinking
-3. **Design Enthusiasts** - Appreciating clean, minimal, premium aesthetics
-
-## Core Requirements (Static)
-
-### Theme System
-- [x] Light Mode (primary): White/soft gray, subtle gradients, Animus simulation feel
-- [x] Dark Mode: Deep black/charcoal, minimal glow accents, still clean
-- [x] Smooth animated transitions between themes
-
-### Background System
-- [x] CSS-based animated grid pattern
-- [x] Volumetric light beams
-- [x] Rotating ring system (central)
-- [x] Floating geometric elements
-- [x] Mouse parallax interaction
-- [x] Fog/gradient overlay
-
-### System HUD
-- [x] Real-time FPS counter
-- [x] Performance percentage
-- [x] Load time measurement
-- [x] Live clock display
-- [x] Status indicator (online/initializing)
-
-### Hero = System Entry
-- [x] Boot sequence animation with progress bar
-- [x] "ASTREON" clean bold title
-- [x] "DIGITAL ARCHITECTURE SYSTEM" subtitle
-- [x] "System Initialized" status
-- [x] "Enter System" / "Transmission" CTAs
-- [x] Module indicators (Identity, Modules, Matrix, Interface)
-
-### Renamed Sections (System Modules)
-- [x] Core_Identity (01) - About section
-- [x] System_Modules (02) - Projects section
-- [x] Capabilities_Matrix (03) - Skills section
-- [x] Transmission_Interface (04) - Contact section
+- Experience: intelligent, precise, immersive, controlled
 
 ## What's Been Implemented ✅ (Jan 2026)
 
-### Core System
-- [x] Zustand store for theme and system state
-- [x] AnimusBackground.js - CSS animated background
-- [x] SystemHUD.js - Real-time stats display
-- [x] ThemeToggle.js - Light/dark mode switcher
+### Smart System HUD
+- [x] Real-time FPS counter (fluctuates 58-61)
+- [x] Performance percentage (fluctuates 96-100%)
+- [x] Load value (fluctuates 90-100%)
+- [x] Live system time (auto-updating every second)
+- [x] Status indicator with blinking animation ("OPTIMAL")
+- [x] Hidden on mobile for performance
 
-### Sections
-- [x] Hero.js - System boot interface
-- [x] CoreIdentity.js - Identity/Expertise/Mission cards + stats
-- [x] SystemModules.js - 4 project cards with status indicators
-- [x] CapabilitiesMatrix.js - Skill categories with progress bars
-- [x] TransmissionInterface.js - Contact form with mocked submission
+### Hero Cinematic Entry
+- [x] Boot sequence phases (init → loading → ready → complete)
+- [x] "INITIALIZING ASTREON CORE..." text display
+- [x] Progress bar animation
+- [x] "SYSTEM ONLINE" transition
+- [x] Staggered content reveal after boot
+- [x] ~2 second total boot duration
 
-### UI Components
-- [x] Navbar.js - Numbered navigation (01, 02, 03, 04)
-- [x] Footer.js - System online status, return to top
+### Depth-Based Scroll Experience
+- [x] Subtle parallax on background elements
+- [x] Section-based y-transforms using useScroll
+- [x] Background rings scale down on scroll
+- [x] Grid opacity reduces on scroll
+- [x] Smooth spring physics for transforms
 
-### Features
-- [x] Smooth theme transitions
-- [x] Boot sequence animation
-- [x] Mouse parallax on background
-- [x] Scroll progress indicator
-- [x] Mobile responsive design
-- [x] All data-testid attributes
+### Micro Interactions
+- [x] Buttons: scale 1.02-1.05 on hover (150ms)
+- [x] Module cards: lift -6px on hover with border highlight
+- [x] Tech tags: scale 1.05 on hover
+- [x] Links: translateX 4px on hover
+- [x] Icons: micro-transforms on hover
+- [x] Form inputs: border color transition on focus
+
+### Master Theme System
+- [x] Light mode: white/gray, subtle shadows, high readability
+- [x] Dark mode: deep black, soft blue accents, minimal glow
+- [x] Smooth 400ms transitions with cubic-bezier easing
+- [x] No flicker between theme changes
+- [x] Both modes preserve contrast and readability
+
+### Performance Optimizations
+- [x] 60fps animations maintained
+- [x] will-change hints on animated elements
+- [x] transform: translateZ(0) for GPU acceleration
+- [x] Mobile: HUD hidden, reduced animations
+- [x] Simplified parallax on mobile
+- [x] backface-visibility: hidden optimizations
+
+### Background System
+- [x] CSS grid pattern with scroll opacity
+- [x] Volumetric light beams with mouse parallax
+- [x] Rotating ring system with scroll scale
+- [x] Center core with pulsing glow
+- [x] Floating geometric elements
+- [x] Fog/gradient overlay
+- [x] Noise texture
 
 ## Testing Results
-- **Success Rate**: 98%
-- **All major features working correctly**
+- **Success Rate**: 100%
+- **All features working correctly**
 
 ## Prioritized Backlog
 
-### P0 - Critical (None remaining)
-All core features implemented
-
 ### P1 - High Priority
-- [ ] Integrate actual email service for contact form
-- [ ] Add project details modal/page
-- [ ] Add 3D elements with Three.js (optional enhancement)
+- [ ] Integrate email service for contact form
+- [ ] Add project detail modals
+- [ ] Add downloadable resume
 
-### P2 - Medium Priority  
+### P2 - Medium Priority
 - [ ] Add keyboard navigation
-- [ ] Add sound effects (optional)
-- [ ] Add blog/articles section
+- [ ] Add sound effects (optional toggle)
+- [ ] Add blog section
 
 ### P3 - Nice to Have
-- [ ] Add animated cursor
+- [ ] Add custom cursor
 - [ ] Add Easter eggs
-- [ ] Add certificate/credentials section
+- [ ] Add 3D elements with Three.js
 
 ## Next Tasks
-1. Replace placeholder project data with real content
-2. Update social links with actual URLs
-3. Integrate email service for contact form
-4. Add SEO metadata
-5. Consider adding subtle 3D elements for wow factor
+1. Replace placeholder content with real data
+2. Update social links
+3. Integrate email service
+4. Add SEO metadata and Open Graph tags
+5. Consider adding subtle audio feedback
 
 ## Tech Stack
 - React 19
 - Tailwind CSS 3.4
 - Framer Motion 12
 - Zustand 5
-- Lucide React (icons)
+- Lucide React
 - Fonts: Space Grotesk, IBM Plex Mono
