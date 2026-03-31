@@ -1,38 +1,33 @@
-import { motion } from "framer-motion";
-import { Heart } from "lucide-react";
+import { motion } from 'framer-motion';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
     <footer
-      className="relative z-40 py-12 border-t border-white/5"
+      className="relative z-10 py-12 border-t border-[var(--animus-border)]"
       data-testid="footer"
     >
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Logo & Copyright */}
           <div className="flex flex-col items-center md:items-start gap-2">
-            <span className="font-heading text-lg font-bold gradient-text">
-              ASTREON
-            </span>
-            <p className="text-sm text-slate-500 flex items-center gap-1">
-              © {currentYear} Made with{" "}
-              <Heart className="w-3 h-3 text-pink-500 fill-pink-500" /> by
-              Astreon
+            <span className="font-display font-semibold">ASTREON</span>
+            <p className="hud-text opacity-50">
+              © {currentYear} All systems reserved.
             </p>
           </div>
 
           {/* Back to top */}
           <motion.a
             href="#hero"
-            className="text-sm text-slate-400 hover:text-white transition-colors flex items-center gap-2"
+            className="hud-text hover:text-[var(--animus-text)] transition-colors flex items-center gap-2"
             whileHover={{ y: -2 }}
             data-testid="back-to-top"
           >
-            Back to top
+            Return to Top
             <motion.span
-              animate={{ y: [0, -4, 0] }}
+              animate={{ y: [0, -3, 0] }}
               transition={{ duration: 1.5, repeat: Infinity }}
             >
               ↑
@@ -40,12 +35,9 @@ const Footer = () => {
           </motion.a>
 
           {/* Status */}
-          <div className="flex items-center gap-2 text-sm text-slate-500">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-            </span>
-            Available for projects
+          <div className="flex items-center gap-2">
+            <div className="status-dot" />
+            <span className="hud-text opacity-60">System Online</span>
           </div>
         </div>
       </div>

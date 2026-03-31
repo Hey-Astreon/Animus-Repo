@@ -1,159 +1,159 @@
-import { motion } from "framer-motion";
-import { Github, Linkedin, Twitter, ArrowDown } from "lucide-react";
-import CorePulse from "../AstreonCore/CorePulse";
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { ArrowRight, ChevronDown } from 'lucide-react';
+import { useSystemStore } from '../../store/useStore';
 
 const Hero = () => {
+  const [isBooted, setIsBooted] = useState(false);
+  const [bootProgress, setBootProgress] = useState(0);
+  const setSystemStatus = useSystemStore((state) => state.setSystemStatus);
+
+  useEffect(() => {
+    // Boot sequence animation
+    const bootInterval = setInterval(() => {
+      setBootProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(bootInterval);
+          setIsBooted(true);
+          setSystemStatus('online');
+          return 100;
+        }
+        return prev + Math.random() * 15;
+      });
+    }, 100);
+
+    return () => clearInterval(bootInterval);
+  }, [setSystemStatus]);
+
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center text-center z-40 px-6"
+      className="relative min-h-screen flex flex-col items-center justify-center z-10"
       data-testid="hero-section"
     >
-      {/* Core Pulse behind the title */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <CorePulse />
+      <div className="max-w-5xl mx-auto px-6 text-center">
+        {/* Boot Sequence */}
+        {!isBooted ? (
+          <motion.div
+            className="flex flex-col items-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            <span className="hud-text mb-4">Initializing System</span>
+            <div className="w-48 h-[2px] bg-[var(--animus-border)] overflow-hidden">
+              <motion.div
+                className="h-full bg-[var(--animus-accent)]"
+                style={{ width: `${Math.min(bootProgress, 100)}%` }}
+              />
+            </div>
+            <span className="hud-text mt-2">{Math.round(bootProgress)}%</span>
+          </motion.div>
+        ) : (
+          <>
+            {/* Status Line */}
+            <motion.div
+              className="flex items-center justify-center gap-3 mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              <div className="status-dot" />
+              <span className="hud-text">System Initialized</span>
+              <div className="h-[1px] w-12 bg-[var(--animus-border)]" />
+              <span className="hud-text opacity-50">v2.0</span>
+            </motion.div>
+
+            {/* Main Title */}
+            <motion.h1
+              className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-semibold tracking-tight mb-6"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+              data-testid="hero-title"
+            >
+              ASTREON
+            </motion.h1>
+
+            {/* Subtitle */}
+            <motion.p
+              className="font-mono text-sm tracking-[0.2em] text-[var(--animus-text-muted)] uppercase mb-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+            >
+              Digital Architecture System
+            </motion.p>
+
+            {/* Description */}
+            <motion.p
+              className="text-lg text-[var(--animus-text-muted)] max-w-xl mx-auto mb-12 leading-relaxed"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8 }}
+            >
+              Full-Stack Developer crafting intelligent systems
+              and immersive digital experiences.
+            </motion.p>
+
+            {/* CTA Buttons */}
+            <motion.div
+              className="flex flex-col sm:flex-row items-center justify-center gap-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1 }}
+            >
+              <a
+                href="#modules"
+                className="animus-button group"
+                data-testid="hero-cta-enter"
+              >
+                <span className="flex items-center gap-2">
+                  Enter System
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </span>
+              </a>
+
+              <a
+                href="#transmission"
+                className="animus-button-ghost"
+                data-testid="hero-cta-contact"
+              >
+                Transmission
+              </a>
+            </motion.div>
+
+            {/* Module Indicators */}
+            <motion.div
+              className="flex items-center justify-center gap-8 mt-16"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.2 }}
+            >
+              {['Identity', 'Modules', 'Matrix', 'Interface'].map((module, i) => (
+                <div key={module} className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 bg-[var(--animus-accent)] opacity-50" />
+                  <span className="hud-text opacity-50">{module}</span>
+                </div>
+              ))}
+            </motion.div>
+          </>
+        )}
       </div>
 
-      {/* Content */}
-      <motion.div
-        className="relative z-10"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-      >
-        {/* Status indicator */}
+      {/* Scroll Indicator */}
+      {isBooted && (
         <motion.div
-          className="flex items-center justify-center gap-2 mb-8"
+          className="absolute bottom-12 left-1/2 -translate-x-1/2"
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
+          animate={{ opacity: 1, y: [0, 8, 0] }}
+          transition={{
+            opacity: { delay: 1.5 },
+            y: { duration: 2, repeat: Infinity, ease: 'easeInOut' },
+          }}
         >
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
-          </span>
-          <span className="font-mono text-xs tracking-[0.2em] text-cyan-400 uppercase">
-            System Active
-          </span>
+          <ChevronDown className="w-5 h-5 text-[var(--animus-text-muted)]" />
         </motion.div>
-
-        {/* Main title */}
-        <motion.h1
-          className="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter uppercase mb-6"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.8 }}
-        >
-          <span className="gradient-text text-glow-violet">ASTREON</span>
-        </motion.h1>
-
-        {/* Subtitle */}
-        <motion.p
-          className="font-mono text-sm sm:text-base tracking-[0.15em] text-slate-400 uppercase mb-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
-        >
-          A Living Digital Universe
-        </motion.p>
-
-        {/* Description */}
-        <motion.p
-          className="font-body text-base sm:text-lg text-slate-300 max-w-xl mx-auto mb-10 leading-relaxed"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-        >
-          Full-Stack Developer & Digital Architect crafting intelligent,
-          immersive experiences at the intersection of code and creativity.
-        </motion.p>
-
-        {/* CTA Buttons */}
-        <motion.div
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1 }}
-        >
-          <a
-            href="#projects"
-            className="group relative px-8 py-4 rounded-full glass glow-violet overflow-hidden transition-all duration-300 hover:scale-105"
-            data-testid="hero-cta-projects"
-          >
-            <span className="relative z-10 font-semibold text-white flex items-center gap-2">
-              Explore Projects
-              <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform" />
-            </span>
-            <div className="absolute inset-0 bg-gradient-to-r from-violet-600/20 to-cyan-600/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-          </a>
-
-          <a
-            href="#contact"
-            className="px-8 py-4 rounded-full border border-white/10 text-slate-300 hover:text-white hover:border-white/20 transition-all duration-300"
-            data-testid="hero-cta-contact"
-          >
-            Get in Touch
-          </a>
-        </motion.div>
-
-        {/* Social Links */}
-        <motion.div
-          className="flex items-center justify-center gap-6"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2 }}
-        >
-          <a
-            href="https://github.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-slate-400 hover:text-violet-400 transition-colors duration-300"
-            data-testid="social-github"
-            aria-label="GitHub"
-          >
-            <Github className="w-5 h-5" />
-          </a>
-          <a
-            href="https://linkedin.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-slate-400 hover:text-cyan-400 transition-colors duration-300"
-            data-testid="social-linkedin"
-            aria-label="LinkedIn"
-          >
-            <Linkedin className="w-5 h-5" />
-          </a>
-          <a
-            href="https://twitter.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-slate-400 hover:text-pink-400 transition-colors duration-300"
-            data-testid="social-twitter"
-            aria-label="Twitter"
-          >
-            <Twitter className="w-5 h-5" />
-          </a>
-        </motion.div>
-      </motion.div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-10 left-1/2 -translate-x-1/2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, y: [0, 10, 0] }}
-        transition={{
-          opacity: { delay: 1.5 },
-          y: { duration: 2, repeat: Infinity, ease: "easeInOut" },
-        }}
-      >
-        <div className="w-6 h-10 rounded-full border border-white/20 flex items-start justify-center p-2">
-          <motion.div
-            className="w-1 h-2 bg-violet-400 rounded-full"
-            animate={{ y: [0, 12, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          />
-        </div>
-      </motion.div>
+      )}
     </section>
   );
 };
